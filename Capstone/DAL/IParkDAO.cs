@@ -18,5 +18,7 @@ namespace Capstone.DAL
         /// </summary>
         /// <returns></returns>
         IList<Park> ListArcadia();
+
+        IList<Park> GetParkDetail(int parkId);
     }
 }

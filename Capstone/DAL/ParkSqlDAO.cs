@@ -10,6 +10,8 @@ namespace Capstone.DAL
     {
         private string connectionString;
 
+        private string SQL_ParkDetail = "SELECT * FROM park WHERE park_id = @park_id;";
+
         public ParkSqlDAO(string dbConnectionString)
         {
             connectionString = dbConnectionString;
@@ -47,6 +49,39 @@ namespace Capstone.DAL
             return parks;
 
         }
+
+        public IList<Park> GetParkDetail(int parkId)
+        {
+            List<Park> parks = new List<Park>();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand(SQL_ParkDetail, conn);
+                    cmd.Parameters.AddWithValue("@park_id", parkId);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while(reader.Read())
+                    {
+                        Park prk = ConvertReaderToPark(reader);
+                        parks.Add(prk);
+                    }
+                }
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("Error reading the database");
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+
+            return parks;
+        }
+
 
         public IList<Park> ListArcadia()
         {

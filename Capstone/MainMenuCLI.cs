@@ -1,5 +1,6 @@
 ﻿using Capstone.DAL;
 using Capstone.Models;
+using ProjectOrganizer;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,6 +11,8 @@ namespace Capstone
     {
         const string Command_ListAvailableParks = "1";
         const string Command_ListArcadia = "1";
+        const string Command_ListArches = "2";
+        const string Command_ListCuyahoga = "3";
         const string Command_Quit = "Q";
 
         private IParkDAO parkDAO;
@@ -77,13 +80,21 @@ namespace Capstone
             while (true)
             {
                 string command = Console.ReadLine();
-
+                
                 Console.Clear();
 
                 switch (command.ToLower())
                 {
                     case Command_ListArcadia:
-                        ListArcadia();
+                        GetParkDetail();
+                        break;
+
+                    case Command_ListArches:
+                        GetParkDetail();
+                        break;
+
+                    case Command_ListCuyahoga:
+                        GetParkDetail();
                         break;
 
                     case Command_Quit:
@@ -97,23 +108,40 @@ namespace Capstone
             }
         }
 
-        private void ListArcadia()
+
+        private void GetParkDetail()
         {
+            int parkId = CLIHelper.GetInteger("Please choose a park for more details: ");
+            IList<Park> parks = parkDAO.GetParkDetail(parkId);
 
-            IList<Park> arcadia = parkDAO.ListArcadia();
-
-            foreach (Park arcadiaDeets in arcadia)
+            foreach (Park detail in parks)
             {
-               Console.WriteLine($"{arcadiaDeets.Name} National Park");
-               Console.WriteLine($"Location: {arcadiaDeets.Location}");
-               Console.WriteLine($"Established: {arcadiaDeets.EstablishDate}");
-               Console.WriteLine($"Area: {arcadiaDeets.Area}");
-               Console.WriteLine($"Annual Visitors: {arcadiaDeets.Visitors}");
+               Console.WriteLine($"{detail.Name} National Park");
+               Console.WriteLine($"Location: {detail.Location}");
+               Console.WriteLine($"Established: {detail.EstablishDate}");
+               Console.WriteLine($"Area: {detail.Area}");
+               Console.WriteLine($"Annual Visitors: {detail.Visitors}");
                Console.WriteLine();
-               Console.WriteLine($"{arcadiaDeets.Description}");
+               Console.WriteLine($"{detail.Description}");
             }
         }
         
+        //private void ListArcadia()
+        //{
+        //    IList<Park> arcadia = parkDAO.ListArcadia();
+
+        //    foreach (Park arcadiaDeets in arcadia)
+        //    {
+        //        Console.WriteLine($"{arcadiaDeets.Name} National Park");
+        //        Console.WriteLine($"Location: {arcadiaDeets.Location}");
+        //        Console.WriteLine($"Established: {arcadiaDeets.EstablishDate}");
+        //        Console.WriteLine($"Area: {arcadiaDeets.Area}");
+        //        Console.WriteLine($"Annual Visitors: {arcadiaDeets.Visitors}");
+        //        Console.WriteLine();
+        //        Console.WriteLine($"{arcadiaDeets.Description}");
+        //    }
+        //}
+
 
         private void PrintHeader()
         {

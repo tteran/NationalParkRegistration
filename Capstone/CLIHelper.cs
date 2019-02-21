@@ -119,5 +119,10 @@ namespace ProjectOrganizer
 
             return userInput;
         }
+
+        internal static string GetInteger()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
