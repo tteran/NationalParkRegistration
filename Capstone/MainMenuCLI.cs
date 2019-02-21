@@ -47,14 +47,13 @@ namespace Capstone
 
                     case Command_Quit:
                         Console.WriteLine("Thank you for using the park registry program.");
-                        return;
+                        break;
 
                     default:
                         Console.WriteLine("The command provided was not a valid command, please try again.");
                         break;
                 }
             }
-
         }
 
         private void ListAvailableParks()
@@ -69,9 +68,7 @@ namespace Capstone
                 Console.WriteLine($"({park.ParkId.ToString()}) - {park.Name.PadLeft(5)}");
             }
             Console.WriteLine("(Q) - QUIT");
-            //ParkDetailMenu parkdetail = new ParkDetailMenu();
-            //parkdetail.Run();   
-
+    
             ParkDetailsRun();
         }
 
@@ -81,7 +78,7 @@ namespace Capstone
             {
                 string command = Console.ReadLine();
                 
-                Console.Clear();
+                //Console.Clear();
 
                 switch (command.ToLower())
                 {
@@ -125,23 +122,6 @@ namespace Capstone
                Console.WriteLine($"{detail.Description}");
             }
         }
-        
-        //private void ListArcadia()
-        //{
-        //    IList<Park> arcadia = parkDAO.ListArcadia();
-
-        //    foreach (Park arcadiaDeets in arcadia)
-        //    {
-        //        Console.WriteLine($"{arcadiaDeets.Name} National Park");
-        //        Console.WriteLine($"Location: {arcadiaDeets.Location}");
-        //        Console.WriteLine($"Established: {arcadiaDeets.EstablishDate}");
-        //        Console.WriteLine($"Area: {arcadiaDeets.Area}");
-        //        Console.WriteLine($"Annual Visitors: {arcadiaDeets.Visitors}");
-        //        Console.WriteLine();
-        //        Console.WriteLine($"{arcadiaDeets.Description}");
-        //    }
-        //}
-
 
         private void PrintHeader()
         {
