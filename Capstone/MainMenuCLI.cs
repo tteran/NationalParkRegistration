@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Capstone
 {
-    public class CampGroundMenuCLI
+    public class MainMenuCLI
     {
         const string Command_ListAvailableParks = "1";
         const string Command_Quit = "Q";
@@ -16,7 +16,7 @@ namespace Capstone
         private ICampSiteDAO campSiteDAO;
         private IReservationDAO reservationDAO;
 
-        public CampGroundMenuCLI(IParkDAO parkDAO, ICampGroundDAO campGroundDAO, ICampSiteDAO campSiteDAO, IReservationDAO reservationDAO)
+        public MainMenuCLI(IParkDAO parkDAO, ICampGroundDAO campGroundDAO, ICampSiteDAO campSiteDAO, IReservationDAO reservationDAO)
         {
             this.parkDAO = parkDAO;
             this.campGroundDAO = campGroundDAO;
@@ -51,7 +51,6 @@ namespace Capstone
                 }
             }
 
-
         }
 
         private void ListAvailableParks()
@@ -63,10 +62,15 @@ namespace Capstone
 
             foreach(Park park in parks)
             {
-                Console.WriteLine($"({park.ParkId.ToString()}) {park.Name.PadLeft(5)}");
+                Console.WriteLine($"({park.ParkId.ToString()}) - {park.Name.PadLeft(5)}");
             }
+            Console.WriteLine("(Q)  -  QUIT");
+            ParkDetailMenu parkdetail = new ParkDetailMenu();
+            parkdetail.Run();
 
+         
         }
+
 
         private void PrintHeader()
         {
