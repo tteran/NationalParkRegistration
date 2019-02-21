@@ -19,20 +19,20 @@ namespace Capstone
                 {
 
                 }
-                if (parkId == 1)
+                if (parkId == 2)
                 {
 
                 }
-                if (parkId == 1)
+                if (parkId == 3)
                 {
 
                 }
 
                 else
                 {
-                    //MainMenuCLI main = new MainMenuCLI();
-                    //main.RunMenuCLI();
-                    break;
+                    MainMenuCLI main = new MainMenuCLI();
+                    main.RunMenuCLI();
+
                 }
             }
 
