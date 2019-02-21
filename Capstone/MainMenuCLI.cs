@@ -9,6 +9,7 @@ namespace Capstone
     public class MainMenuCLI
     {
         const string Command_ListAvailableParks = "1";
+        const string Command_ListArcadia = "1";
         const string Command_Quit = "Q";
 
         private IParkDAO parkDAO;
@@ -64,13 +65,55 @@ namespace Capstone
             {
                 Console.WriteLine($"({park.ParkId.ToString()}) - {park.Name.PadLeft(5)}");
             }
-            Console.WriteLine("(Q)  -  QUIT");
-            ParkDetailMenu parkdetail = new ParkDetailMenu();
-            parkdetail.Run();
+            Console.WriteLine("(Q) - QUIT");
+            //ParkDetailMenu parkdetail = new ParkDetailMenu();
+            //parkdetail.Run();   
 
-         
+            ParkDetailsRun();
         }
 
+        public void ParkDetailsRun()
+        {
+            while (true)
+            {
+                string command = Console.ReadLine();
+
+                Console.Clear();
+
+                switch (command.ToLower())
+                {
+                    case Command_ListArcadia:
+                        ListArcadia();
+                        break;
+
+                    case Command_Quit:
+                        Console.WriteLine("Thanks for using park registry program.");
+                        return;
+
+                    default:
+                        Console.WriteLine("The command provided was not valid. Try again loser.");
+                        break;
+                }
+            }
+        }
+
+        private void ListArcadia()
+        {
+
+            IList<Park> arcadia = parkDAO.ListArcadia();
+
+            foreach (Park arcadiaDeets in arcadia)
+            {
+               Console.WriteLine($"{arcadiaDeets.Name} National Park");
+               Console.WriteLine($"Location: {arcadiaDeets.Location}");
+               Console.WriteLine($"Established: {arcadiaDeets.EstablishDate}");
+               Console.WriteLine($"Area: {arcadiaDeets.Area}");
+               Console.WriteLine($"Annual Visitors: {arcadiaDeets.Visitors}");
+               Console.WriteLine();
+               Console.WriteLine($"{arcadiaDeets.Description}");
+            }
+        }
+        
 
         private void PrintHeader()
         {

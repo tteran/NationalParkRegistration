@@ -12,5 +12,11 @@ namespace Capstone.DAL
         /// </summary>
         /// <returns>A list of all the parks.</returns>
         IList<Park> ListAvailableParks();
+
+        /// <summary>
+        /// Gets details about Arcadia Park.
+        /// </summary>
+        /// <returns></returns>
+        IList<Park> ListArcadia();
     }
 }

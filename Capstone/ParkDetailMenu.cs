@@ -1,42 +1,82 @@
-﻿using ProjectOrganizer;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿//using Capstone.DAL;
+//using Capstone.Models;
+//using ProjectOrganizer;
+//using System;
+//using System.Collections.Generic;
+//using System.Text;
 
-namespace Capstone
-{
-    public class ParkDetailMenu
-    {
-        public void Run()
-        {
-            //Console.WriteLine("Please choose a park for more details or Q for quit.");
-            int parkId = CLIHelper.GetInteger("Choose a park for more details.");
-            string quitButton = CLIHelper.GetString("QUIT");
+//namespace Capstone
+//{
+//    public class ParkDetailMenu
+//    {
+//        private IParkDAO parkDAO;
 
-            while (true)
-            {
-                if (parkId == 1)
-                {
+//        public ParkDetailMenu(IParkDAO parkDAO)
+//        {
+//            this.parkDAO = parkDAO;
+//        }
 
-                }
-                if (parkId == 2)
-                {
+//        public ParkDetailMenu()
+//        {
+//        }
 
-                }
-                if (parkId == 3)
-                {
+//        const string Command_ListArcadia = "1";
+//        const string Command_Quit = "Q";
+  
+//        public void Run()
+//        {
+//            while(true)
+//            {
+//                string command = Console.ReadLine();
 
-                }
+//                Console.Clear();
 
-                else
-                {
-                    MainMenuCLI main = new MainMenuCLI();
-                    main.RunMenuCLI();
+//                switch(command.ToLower())
+//                {
+//                    case Command_ListArcadia:
+//                        ListArcadia();
+//                        break;
 
-                }
-            }
+//                    case Command_Quit:
+//                        Console.WriteLine("Thanks for using park registry program.");
+//                        return;
 
-        }
+//                    default:
+//                        Console.WriteLine("The command provided was not valid. Try again loser.");
+//                        break;
+//                }
+//            }
 
-    }
-}
+//            ////Console.WriteLine("Please choose a park for more details or Q for quit.");
+//            //string parkId = CLIHelper.GetString("Choose a park for more details.");
+//            //string quitButton = CLIHelper.GetString("QUIT");
+
+//            //while (true)
+//            //{
+//            //    if (parkId == "1")
+//            //    {
+//            //        ListDetailsAboutArcadia();
+//            //    }
+//            //    if (parkId == "2")
+//            //    {
+
+//            //    }
+//            //    if (parkId == "3")
+//            //    {
+
+//            //    }      
+//            //}
+//        }
+        
+
+//        private void ListArcadia()
+//        {
+//            IList<Park> arcadia = parkDAO.ListArcadia();
+
+//            foreach (Park arcadiaDeets in arcadia)
+//            {
+//                Console.WriteLine($"{arcadiaDeets.Name}\n{arcadiaDeets.Location}\n{arcadiaDeets.EstablishDate}\n{arcadiaDeets.Area}\n{arcadiaDeets.Visitors}\n{arcadiaDeets.Description}");
+//            }
+//        }
+//    }
+//}
