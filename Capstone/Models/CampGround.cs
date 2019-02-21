@@ -24,12 +24,12 @@ namespace Capstone.Models
         /// <summary>
         /// Gets the open from date.
         /// </summary>
-        public string OpenFrom { get; set; }
+        public int OpenFrom { get; set; }
 
         /// <summary>
         /// Gets the open to date.
         /// </summary>
-        public string OpenTo { get; set; }
+        public int OpenTo { get; set; }
 
         /// <summary>
         /// Gets the daily fee.
