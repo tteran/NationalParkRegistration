@@ -14,6 +14,8 @@ namespace Capstone
         private ICampSiteDAO campSiteDAO;
         private IReservationDAO reservationDAO;
 
+        private int parkId;
+
         public MainMenuCLI(IParkDAO parkDAO, ICampGroundDAO campGroundDAO, ICampSiteDAO campSiteDAO, IReservationDAO reservationDAO)
         {
             this.parkDAO = parkDAO;
@@ -110,8 +112,8 @@ namespace Capstone
 
         private void GetParkDetail()
         {
-            int parkId = CLIHelper.GetInteger("Please choose a park for more details: ");
-            IList<Park> parks = parkDAO.GetParkDetail(parkId);
+            this.parkId = CLIHelper.GetInteger("Please choose a park for more details: ");
+            IList<Park> parks = parkDAO.GetParkDetail(this.parkId);
 
             Console.Clear();
 
@@ -162,15 +164,14 @@ namespace Capstone
 
         private void ViewCampground()
         {
-            int parkId = CLIHelper.GetInteger("Please make a choice: ");
-            IList<CampGround> campGrounds = campGroundDAO.ViewCampground(parkId);
-
+            IList<CampGround> campGrounds = campGroundDAO.ViewCampground(this.parkId);
+            
             Console.WriteLine("             Name         Open            Close           Daily Fee");
             Console.WriteLine();
 
             foreach (CampGround camp in campGrounds)
             {
-                Console.WriteLine($"{camp.CampgroundId}\t{camp.Name}\t{camp.OpenFrom}\t\t{camp.OpenTo}\t\t{camp.DailyFee:C2}");
+                Console.WriteLine($"{camp.CampgroundId}\t{camp.Name}\t{new DateTime(2001, camp.OpenFrom, 1).ToString("MMMM")}\t\t{new DateTime(2001, camp.OpenTo, 1).ToString("MMMM")}\t\t{camp.DailyFee:C2}");
             }
         }
 

@@ -14,11 +14,9 @@ namespace Capstone.DAL
         IList<Park> ListAvailableParks();
 
         /// <summary>
-        /// Gets details about Arcadia Park.
+        /// Gets details about a specif Park.
         /// </summary>
         /// <returns></returns>
-        IList<Park> ListArcadia();
-
         IList<Park> GetParkDetail(int parkId);
     }
 }
