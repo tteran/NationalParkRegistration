@@ -148,7 +148,7 @@ namespace Capstone
                     break;
 
                 case ("2"):
-                    //SearchForReservation();
+                    SearchForReservation();
                     break;
 
                 case ("3"):
@@ -173,6 +173,18 @@ namespace Capstone
             {
                 Console.WriteLine($"{camp.CampgroundId}\t{camp.Name}\t{new DateTime(2001, camp.OpenFrom, 1).ToString("MMMM")}\t\t{new DateTime(2001, camp.OpenTo, 1).ToString("MMMM")}\t\t{camp.DailyFee:C2}");
             }
+        }
+
+        private void SearchForReservation()
+        {
+            IList<CampSite> campSites = campSiteDAO.ListOfSites(this.parkId);
+
+            foreach (CampSite campSite in campSites)
+            {
+                Console.WriteLine($"{campSite.SiteId}\t{campSite.MaxOccupancy}\t{campSite.IsAccessible}\t{campSite.MaxRvLength}\t{campSite.HasUtilties}\t");
+            }
+
+            
         }
 
         private void PrintHeader()

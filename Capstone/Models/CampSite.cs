@@ -29,7 +29,7 @@ namespace Capstone.Models
         /// <summary>
         /// Gets if the park is accessible for handicap.
         /// </summary>
-        public bool IsAccessible { get; set; }
+        public int IsAccessible { get; set; }
 
         /// <summary>
         /// Gets the max rv length.
@@ -39,6 +39,6 @@ namespace Capstone.Models
         /// <summary>
         /// Gets if the site has utilities.
         /// </summary>
-        public bool HasUtilties { get; set; }  
+        public int HasUtilties { get; set; }  
     }
 }

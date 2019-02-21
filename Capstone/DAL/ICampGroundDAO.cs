@@ -13,5 +13,7 @@ namespace Capstone.DAL
         /// <param name="parkId"></param>
         /// <returns></returns>
         IList<CampGround> ViewCampground(int parkId);        
+
+
     }
 }
