@@ -6,7 +6,12 @@ namespace Capstone.DAL
 {
     public class CampGroundSqlDAO : ICampGroundDAO
     {
+        private string connectionString;
 
+        public CampGroundSqlDAO(string dbConnectionString)
+        {
+            connectionString = dbConnectionString;
+        }
 
 
     }

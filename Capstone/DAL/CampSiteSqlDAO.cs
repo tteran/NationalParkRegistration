@@ -4,7 +4,15 @@ using System.Text;
 
 namespace Capstone.DAL
 {
-    public class CampSiteDAO : ICampSiteDAO
+    public class CampSiteSqlDAO : ICampSiteDAO
     {
+        private string connectionString;
+
+        public CampSiteSqlDAO(string dbConnectionString)
+        {
+            connectionString = dbConnectionString;
+        }
+
+
     }
 }

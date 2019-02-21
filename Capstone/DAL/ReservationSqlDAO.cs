@@ -6,6 +6,11 @@ namespace Capstone.DAL
 {
     public class ReservationSqlDAO: IReservationDAO
     {
+        private string connectionString;
 
+        public ReservationSqlDAO(string dbConnectionString)
+        {
+            connectionString = dbConnectionString;
+        }
     }
 }

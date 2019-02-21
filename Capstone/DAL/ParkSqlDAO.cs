@@ -6,5 +6,11 @@ namespace Capstone.DAL
 {
     public class ParkSqlDAO : IParkDAO
     {
+        private string connectionString;
+
+        public ParkSqlDAO(string dbConnectionString)
+        {
+            connectionString = dbConnectionString;
+        }
     }
 }
