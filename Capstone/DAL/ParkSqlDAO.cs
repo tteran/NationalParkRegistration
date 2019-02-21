@@ -82,38 +82,6 @@ namespace Capstone.DAL
             return parks;
         }
 
-
-        public IList<Park> ListArcadia()
-        {
-            List<Park> arcadiaDetails = new List<Park>();
-
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(connectionString))
-                {
-                    conn.Open();
-
-                    SqlCommand cmd = new SqlCommand("SELECT * FROM park WHERE park_id = 1;", conn);
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    while (reader.Read())
-                    {
-                        Park prk = ConvertReaderToPark(reader);
-                        arcadiaDetails.Add(prk);
-                    }
-                }
-            }
-            catch (SqlException ex)
-            {
-                Console.WriteLine("Error listing information about Arcadia.");
-                Console.WriteLine(ex.Message);
-                throw;
-            }
-
-            return arcadiaDetails;
-
-        }
-
         private Park ConvertReaderToPark(SqlDataReader reader)
         {
             Park park = new Park();

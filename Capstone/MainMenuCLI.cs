@@ -32,7 +32,7 @@ namespace Capstone
             while (true)
             {
                 const string Command_ListAvailableParks = "1";
-                const string Command_Quit = "Q";
+                const string Command_Quit = "q";
 
                 string command = Console.ReadLine();
 
@@ -47,15 +47,13 @@ namespace Capstone
 
                     case Command_Quit:
                         Console.WriteLine("Thank you for using the park registry program.");
+                        PrintHeader();
                         return;
-                        //TODO - Fix quit.
 
                     default:
                         Console.WriteLine("The command provided was not a valid command, please try again.");
                         break;
                 }
-
-
             }
         }
 
@@ -71,20 +69,21 @@ namespace Capstone
                 Console.WriteLine($"({park.ParkId.ToString()}) - {park.Name.PadLeft(5)}");
             }
 
+            Console.WriteLine("(Q) - Quit");
         }
 
         public void ParkDetailsRun()
         {
             while (true)
             {
-                string command = Console.ReadLine();
-
                 const string Command_ListArcadia = "1";
                 const string Command_ListArches = "2";
                 const string Command_ListCuyahoga = "3";
-                const string Command_Quit = "Q";
+                const string Command_Quit1 = "q";
 
-                switch (command.ToLower())
+                string command1 = Console.ReadLine();
+
+                switch (command1.ToLower())
                 {
                     case Command_ListArcadia:
                         GetParkDetail();
@@ -98,14 +97,14 @@ namespace Capstone
                         GetParkDetail();
                         break;
 
-                    case Command_Quit:
+                    case Command_Quit1:
                         Console.WriteLine("Thanks for using park registry program.");
-                        return;
+                        break;
                         //TODO - Fix quit.
 
-                    default:
-                        Console.WriteLine("The command provided was not valid. Try again loser.");
-                        break;
+                    //default:
+                    //    Console.WriteLine("The command provided was not valid. Try again loser.");
+                    //    break;
                 }
             }
         }
@@ -152,6 +151,8 @@ namespace Capstone
                     break;
 
                 case ("3"):
+                    Console.Clear();
+                    PrintHeader();
                     Menu();
                     break;
 
