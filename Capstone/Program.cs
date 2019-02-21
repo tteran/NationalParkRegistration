@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System;
 using System.IO;
+//using ProjectOrganizer.DAL;
 
 namespace Capstone
 {
@@ -16,6 +17,9 @@ namespace Capstone
             IConfigurationRoot configuration = builder.Build();
 
             string connectionString = configuration.GetConnectionString("Project");
+
+            CampGroundMenuCLI camp = new CampGroundMenuCLI();
+            camp.RunMenuCLI();
         }
     }
 }
