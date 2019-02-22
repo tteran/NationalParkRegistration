@@ -9,10 +9,6 @@ namespace Capstone.DAL
     public class CampSiteSqlDAO : ICampSiteDAO
     {
         private string connectionString;
-
-        // private string SQL_ListOfSites = "SELECT site.* FROM site JOIN campground ON(site.campground_id = campground.campground_id) LEFT JOIN reservation ON (site.site_id = reservation.site_id) WHERE site.campground_id = @campgroundId AND reservation.from_date NOT BETWEEN @arrivalDate AND @departureDate AND reservation.to_date NOT BETWEEN @arrivalDate and @departureDate OR site.campground_id = @campgroundId AND reservation.reservation_id IS NULL;";
-        //private string SQL_ListOfSites = "SELECT * FROM site WHERE campground_id = @campgroundId;";
-
         private string SQL_ListOfSites = @"SELECT * FROM site
                                             WHERE site.campground_id = @campgroundId
                                             AND site.site_id NOT IN (SELECT site_id	
@@ -56,7 +52,6 @@ namespace Capstone.DAL
             }
 
             return sites;
-
         }
 
         public IList<CampSite> ListOfSites()
