@@ -12,15 +12,16 @@ namespace Capstone
         private IParkDAO parkDAO;
         private ICampGroundDAO campGroundDAO;
         private ICampSiteDAO campSiteDAO;
-        
+        private IReservationDAO reservationDAO;
 
         private int parkId;
 
-        public MainMenuCLI(IParkDAO parkDAO, ICampGroundDAO campGroundDAO, ICampSiteDAO campSiteDAO)
+        public MainMenuCLI(IParkDAO parkDAO, ICampGroundDAO campGroundDAO, ICampSiteDAO campSiteDAO, IReservationDAO reservationDAO)
         {
             this.parkDAO = parkDAO;
             this.campGroundDAO = campGroundDAO;
             this.campSiteDAO = campSiteDAO;
+            this.reservationDAO = reservationDAO;
         }
 
         public void RunMenuCLI()
@@ -171,7 +172,7 @@ namespace Capstone
         private void ViewCampground()
         {
             //IList<Park> parks = parkDAO.ListAvailableParks(this.parkId);
-            //IList<Park> parks = parkDAO.ListAvailableParks(this.parkId);
+            
             IList<CampGround> campGrounds = campGroundDAO.ViewCampground(this.parkId);
 
             //Console.WriteLine($"{this.parkId}");//TODO figure out how to get name of park
@@ -188,36 +189,61 @@ namespace Capstone
 
         private void SearchReservationRun()
         {
-            Console.WriteLine("Search for Available Campground Sites");
-
-            Console.WriteLine("Which campground (enter 0 to cancel)?:");
-            int choice  = int.Parse(Console.ReadLine());
-
-            int campgroundId;
-            if (choice == 0)
+            while (true)
             {
-                Console.Clear();
-                CampgroundCommandMenu();
+                Console.WriteLine("Search for Available Campground Sites");
+
+                Console.WriteLine("Which campground (enter 0 to cancel)?:");
+                int choice = int.Parse(Console.ReadLine());
+                int campgroundId;
+
+                if (choice == 0)
+                {
+                    Console.Clear();
+                    CampgroundCommandMenu();
+                }
+
+                else
+                {
+                    campgroundId = choice;
+
+                    DateTime arrivalDate = CLIHelper.GetDateTime("What is the arrival date?:");
+                    DateTime departureDate = CLIHelper.GetDateTime("What is the departure date?:");
+
+                    IList<CampSite> campSites = campSiteDAO.SearchReservationRun(campgroundId, arrivalDate, departureDate);
+
+                    Console.WriteLine();
+                    Console.WriteLine("Site NO.  MAX OCCUPANCY  ACCESSIBLE   MAX RV LENGTH    UTILITY  COST");
+                    Console.WriteLine();
+
+                    foreach (CampSite campSite in campSites)
+                    {
+                        Console.WriteLine($"#{campSite.SiteId}\t{campSite.MaxOccupancy}\t\t\t{campSite.IsAccessible}\t{campSite.MaxRvLength}\t{campSite.HasUtilties}\t"); //tod add daily fee
+                    }
+
+                    SetConfirmReservation();
+                }
             }
 
-            campgroundId = choice;
+        }
 
-            DateTime arrivalDate = CLIHelper.GetDateTime("What is the arrival date?:");
-            DateTime departureDate = CLIHelper.GetDateTime("What is the departure date?:");
+        private void CreateReservation()
+        {
+            int siteIdChoice = CLIHelper.GetInteger("Which site should be reserved (enter 0 to cancel)?:");
+            string reservationName = CLIHelper.GetString("What name should the reservation be made under?:");
 
-            IList<CampSite> campSites = campSiteDAO.SearchReservationRun(campgroundId, arrivalDate, departureDate);
-
-            Console.WriteLine();
-            Console.WriteLine("Site NO.  MAX OCCUPANCY  ACCESSIBLE   MAX RV LENGTH    UTILITY  COST");
-            Console.WriteLine();
-
-            foreach (CampSite campSite in campSites)
+            Reservation reservation = new Reservation
             {
-                Console.WriteLine($"#{campSite.SiteId}\t{campSite.MaxOccupancy}\t\t\t{campSite.IsAccessible}\t{campSite.MaxRvLength}\t{campSite.HasUtilties}\t");
-            }
+                SiteId = siteIdChoice,
+                Name = reservationName
+            };
 
-            Console.WriteLine();
+            int reservationId = reservationDAO.CreateReservation(reservation);
 
+                
+            
+        
+            //Console.WriteLine($"Resevervation has been made and the confirmation ID is"); //TODO
         }
 
         private void PrintHeader()
