@@ -172,6 +172,7 @@ namespace Capstone
         private void ViewCampground()
         {
             //IList<Park> parks = parkDAO.ListAvailableParks(this.parkId);
+            //IList<Park> parks = parkDAO.ListAvailableParks(this.parkId);
             IList<CampGround> campGrounds = campGroundDAO.ViewCampground(this.parkId);
 
             //Console.WriteLine($"{this.parkId}");//TODO figure out how to get name of park
