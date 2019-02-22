@@ -221,13 +221,13 @@ namespace Capstone
                         Console.WriteLine($"#{campSite.SiteId}\t{campSite.MaxOccupancy}\t\t\t{campSite.IsAccessible}\t{campSite.MaxRvLength}\t{campSite.HasUtilties}\t"); //tod add daily fee
                     }
 
-                    SetConfirmReservation();
+                    CreateReservation();
                 }
             }
 
         }
 
-        private void CreateReservation()
+        private void CreateReservation(DateTime arrivalDate, DateTime departureDate)
         {
             int siteIdChoice = CLIHelper.GetInteger("Which site should be reserved (enter 0 to cancel)?:");
             string reservationName = CLIHelper.GetString("What name should the reservation be made under?:");
