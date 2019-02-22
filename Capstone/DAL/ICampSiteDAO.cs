@@ -11,6 +11,6 @@ namespace Capstone.DAL
         /// List of sites.
         /// </summary>
         /// <returns></returns>
-        IList<CampSite> ListOfSites(int parkId);
+        IList<CampSite> ListOfSites(int campgroundId);
     }
 }

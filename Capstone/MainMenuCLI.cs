@@ -41,8 +41,8 @@ namespace Capstone
                 switch (command.ToLower())
                 {
                     case Command_ListAvailableParks:
-                        ListAvailableParks();
-                        GetParkDetail();
+                        ListAvailableParks();                      
+                        GetParkDetail();                 
                         break;
 
                     case Command_Quit:
@@ -70,6 +70,7 @@ namespace Capstone
             }
 
             Console.WriteLine("(Q) - Quit");
+            
         }
 
         public void ParkDetailsRun()
@@ -143,17 +144,18 @@ namespace Capstone
             switch(choice.ToString())
             {
                 case ("1"):
+                    Console.Clear();
                     ViewCampground();
                     break;
 
                 case ("2"):
-                    SearchForReservation();
+                    ReservationRun();
                     break;
 
                 case ("3"):
                     Console.Clear();
-                    PrintHeader();
-                    Menu();
+                    ListAvailableParks();
+                    GetParkDetail();   
                     break;
 
                 default:
@@ -163,17 +165,32 @@ namespace Capstone
             }
         }
 
+
         private void ViewCampground()
         {
+            //IList<Park> parks = parkDAO.ListAvailableParks(this.parkId);
             IList<CampGround> campGrounds = campGroundDAO.ViewCampground(this.parkId);
-            
-            Console.WriteLine("             Name         Open            Close           Daily Fee");
+
+            Console.WriteLine($"{this.parkId}");//TODO figure out how to get name of park
+            Console.WriteLine("             Name                   Open               Close           Daily Fee");
             Console.WriteLine();
 
             foreach (CampGround camp in campGrounds)
             {
-                Console.WriteLine($"{camp.CampgroundId}\t{camp.Name}\t{new DateTime(2001, camp.OpenFrom, 1).ToString("MMMM")}\t\t{new DateTime(2001, camp.OpenTo, 1).ToString("MMMM")}\t\t{camp.DailyFee:C2}");
+               
+                Console.WriteLine($"{camp.CampgroundId}\t{camp.Name.PadRight(20)}{new DateTime(2001, camp.OpenFrom, 1).ToString("MMMM")}\t\t{new DateTime(2001, camp.OpenTo, 1).ToString("MMMM")}\t\t{camp.DailyFee:C2}");
             }
+            CampgroundCommandMenu();
+
+        }
+
+        private void ReservationRun()
+        {
+            Console.WriteLine("Search for Available Campground Sites");
+            ///TODO no method, DAO, and interface
+
+
+
         }
 
         private void SearchForReservation()
@@ -182,10 +199,8 @@ namespace Capstone
 
             foreach (CampSite campSite in campSites)
             {
-                Console.WriteLine($"{campSite.SiteId}\t{campSite.MaxOccupancy}\t{campSite.IsAccessible}\t{campSite.MaxRvLength}\t{campSite.HasUtilties}\t");
+                Console.WriteLine($"{campSite.SiteId}\t{campSite.MaxOccupancy}\t\t\t{campSite.IsAccessible}\t{campSite.MaxRvLength}\t{campSite.HasUtilties}\t");
             }
-
-            
         }
 
         private void PrintHeader()
@@ -203,13 +218,14 @@ namespace Capstone
             Console.WriteLine(@"     \'    `- .\_   |\,-'_,-'");
             Console.WriteLine(@"                 `--|_,`'");
             Console.WriteLine(@"                         `/");
-            Console.WriteLine("WELCOME TO USA Camp Registry!!!");
+            
             Console.WriteLine();
             Console.WriteLine();
         }
 
         public void Menu()
         {
+            Console.WriteLine("    WELCOME TO USA Camp Registry!!!");
             Console.WriteLine("(1) - Show list of all PARKS.");
             Console.WriteLine("(Q) - QUIT");
         }

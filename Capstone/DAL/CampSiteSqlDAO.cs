@@ -10,14 +10,14 @@ namespace Capstone.DAL
     {
         private string connectionString;
 
-        //private string SQL_ListOfSites = "SELECT"
+        private string SQL_ListOfSites = "SELECT * FROM site WHERE campground_id = @campgroundId ORDER BY site_number;"; //TODO not the right query
 
         public CampSiteSqlDAO(string dbConnectionString)
         {
             connectionString = dbConnectionString;
         }
 
-        public IList<CampSite> ListOfSites(int parkId)
+        public IList<CampSite> ListOfSites(int campgroundId)
         {
             List<CampSite> sites = new List<CampSite>();
 
@@ -27,7 +27,8 @@ namespace Capstone.DAL
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("SELECT * FROM site;", conn);
+                    SqlCommand cmd = new SqlCommand(SQL_ListOfSites, conn);
+                    cmd.Parameters.AddWithValue("@campgroundId", campgroundId); //TODO WRONG ABOVE 
 
                     SqlDataReader reader = cmd.ExecuteReader();
 
