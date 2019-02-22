@@ -12,16 +12,15 @@ namespace Capstone
         private IParkDAO parkDAO;
         private ICampGroundDAO campGroundDAO;
         private ICampSiteDAO campSiteDAO;
-        private IReservationDAO reservationDAO;
+        
 
         private int parkId;
 
-        public MainMenuCLI(IParkDAO parkDAO, ICampGroundDAO campGroundDAO, ICampSiteDAO campSiteDAO, IReservationDAO reservationDAO)
+        public MainMenuCLI(IParkDAO parkDAO, ICampGroundDAO campGroundDAO, ICampSiteDAO campSiteDAO)
         {
             this.parkDAO = parkDAO;
             this.campGroundDAO = campGroundDAO;
             this.campSiteDAO = campSiteDAO;
-            this.reservationDAO = reservationDAO;
         }
 
         public void RunMenuCLI()

@@ -31,7 +31,7 @@ namespace Capstone.DAL
 
                     SqlDataReader reader = cmd.ExecuteReader();
 
-                    while(reader.Read())
+                    while (reader.Read())
                     {
                         Park prk = ConvertReaderToPark(reader);
                         parks.Add(prk);
@@ -39,7 +39,7 @@ namespace Capstone.DAL
 
                 }
             }
-            catch(SqlException ex)
+            catch (SqlException ex)
             {
                 Console.WriteLine("Error listing all the parks");
                 Console.WriteLine(ex.Message);
@@ -64,7 +64,7 @@ namespace Capstone.DAL
 
                     SqlDataReader reader = cmd.ExecuteReader();
 
-                    while(reader.Read())
+                    while (reader.Read())
                     {
                         Park prk = ConvertReaderToPark(reader);
                         parks.Add(prk);
