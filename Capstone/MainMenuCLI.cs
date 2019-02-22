@@ -135,33 +135,36 @@ namespace Capstone
 
         private void CampgroundCommandMenu()
         {
-            Console.WriteLine("Select a Command");
-            Console.WriteLine("(1) - View Campgrounds");
-            Console.WriteLine("(2) - Search for Reservation");
-            Console.WriteLine("(3) - Return to Previous Screen");
-            string choice = Console.ReadLine();
+            while (true)
+            { 
+                Console.WriteLine("Select a Command");
+                Console.WriteLine("(1) - View Campgrounds");
+                Console.WriteLine("(2) - Search for Reservation");
+                Console.WriteLine("(3) - Return to Previous Screen");
+                string choice = Console.ReadLine();
 
-            switch(choice.ToString())
-            {
-                case ("1"):
-                    Console.Clear();
-                    ViewCampground();
-                    break;
+                switch (choice.ToString())
+                {
+                    case ("1"):
+                        Console.Clear();
+                        ViewCampground();
+                        break;
 
-                case ("2"):
-                    ReservationRun();
-                    break;
+                    case ("2"):
+                        ReservationRun();
+                        break;
 
-                case ("3"):
-                    Console.Clear();
-                    ListAvailableParks();
-                    GetParkDetail();   
-                    break;
+                    case ("3"):
+                        Console.Clear();
+                        ListAvailableParks();
+                        GetParkDetail();
+                        break;
 
-                default:
-                    Console.WriteLine("Invalid entry. Please try again.");
-                    CampgroundCommandMenu();
-                    break;               
+                    default:
+                        Console.WriteLine("Invalid entry. Please try again.");
+                        CampgroundCommandMenu();
+                        break;
+                }
             }
         }
 
@@ -171,13 +174,12 @@ namespace Capstone
             //IList<Park> parks = parkDAO.ListAvailableParks(this.parkId);
             IList<CampGround> campGrounds = campGroundDAO.ViewCampground(this.parkId);
 
-            Console.WriteLine($"{this.parkId}");//TODO figure out how to get name of park
+            //Console.WriteLine($"{this.parkId}");//TODO figure out how to get name of park
             Console.WriteLine("             Name                   Open               Close           Daily Fee");
             Console.WriteLine();
 
             foreach (CampGround camp in campGrounds)
-            {
-               
+            {  
                 Console.WriteLine($"{camp.CampgroundId}\t{camp.Name.PadRight(20)}{new DateTime(2001, camp.OpenFrom, 1).ToString("MMMM")}\t\t{new DateTime(2001, camp.OpenTo, 1).ToString("MMMM")}\t\t{camp.DailyFee:C2}");
             }
             CampgroundCommandMenu();
@@ -186,10 +188,31 @@ namespace Capstone
 
         private void ReservationRun()
         {
-            Console.WriteLine("Search for Available Campground Sites");
+            while (true)
+            {
+                Console.WriteLine("Search for Available Campground Sites");
+
+                Console.WriteLine("Which campground (enter 0 to cancel)?: ");
+                int campgroundId = int.Parse(Console.ReadLine());
+
+                if (campgroundId == 0)
+                {
+                    Console.Clear();
+                    ListAvailableParks();
+                    GetParkDetail();
+                    break;
+                }
+            }
+
+            Console.WriteLine("What is the arrival date? ");
+            DateTime arrivalDate = DateTime.Parse(Console.ReadLine());
+
+            Console.WriteLine("What is the departure date? ");
+            DateTime departureDate = DateTime.Parse(Console.ReadLine());
+
+          
+
             ///TODO no method, DAO, and interface
-
-
 
         }
 
