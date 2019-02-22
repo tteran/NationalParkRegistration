@@ -180,7 +180,7 @@ namespace Capstone
 
             foreach (CampGround camp in campGrounds)
             {  
-                Console.WriteLine($"{camp.CampgroundId}\t{camp.Name.PadRight(20)}{new DateTime(2001, camp.OpenFrom, 1).ToString("MMMM")}\t\t{new DateTime(2001, camp.OpenTo, 1).ToString("MMMM")}\t\t{camp.DailyFee:C2}");
+                Console.WriteLine($"#{camp.CampgroundId}\t{camp.Name.PadRight(20)}{new DateTime(2001, camp.OpenFrom, 1).ToString("MMMM")}\t\t{new DateTime(2001, camp.OpenTo, 1).ToString("MMMM")}\t\t{camp.DailyFee:C2}");
             }
             CampgroundCommandMenu();
 
@@ -207,10 +207,16 @@ namespace Capstone
 
             IList<CampSite> campSites = campSiteDAO.SearchReservationRun(campgroundId, arrivalDate, departureDate);
 
+            Console.WriteLine();
+            Console.WriteLine("Site NO.  MAX OCCUPANCY  ACCESSIBLE   MAX RV LENGTH    UTILITY  COST");
+            Console.WriteLine();
+
             foreach (CampSite campSite in campSites)
             {
-                Console.WriteLine($"{campSite.SiteId}\t{campSite.MaxOccupancy}\t\t\t{campSite.IsAccessible}\t{campSite.MaxRvLength}\t{campSite.HasUtilties}\t");
+                Console.WriteLine($"#{campSite.SiteId}\t{campSite.MaxOccupancy}\t\t\t{campSite.IsAccessible}\t{campSite.MaxRvLength}\t{campSite.HasUtilties}\t");
             }
+
+            Console.WriteLine();
 
         }
 
@@ -228,8 +234,7 @@ namespace Capstone
             Console.WriteLine(@"       '._;   \ .   \   `_,-'_,-'");
             Console.WriteLine(@"     \'    `- .\_   |\,-'_,-'");
             Console.WriteLine(@"                 `--|_,`'");
-            Console.WriteLine(@"                         `/");
-            
+            Console.WriteLine(@"                         `/");        
             Console.WriteLine();
             Console.WriteLine();
         }
