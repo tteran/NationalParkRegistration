@@ -9,7 +9,7 @@ namespace Capstone.DAL
     public class CampSiteSqlDAO : ICampSiteDAO
     {
         private string connectionString;
-        private string SQL_ListOfSites = @"SELECT * FROM site
+        private string SQL_ListOfSites = @"SELECT TOP 5 * FROM site
                                             WHERE site.campground_id = @campgroundId
                                             AND site.site_id NOT IN (SELECT site_id	
 					                        FROM reservation			

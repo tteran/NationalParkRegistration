@@ -26,11 +26,11 @@ namespace Capstone
 
         public void RunMenuCLI()
         {
-            PrintHeader();
-            Menu();
 
             while (true)
             {
+            PrintHeader();
+            Menu();
                 const string Command_ListAvailableParks = "1";
                 const string Command_Quit = "q";
 
@@ -73,42 +73,42 @@ namespace Capstone
             
         }
 
-        public void ParkDetailsRun()
-        {
-            while (true)
-            {
-                const string Command_ListArcadia = "1";
-                const string Command_ListArches = "2";
-                const string Command_ListCuyahoga = "3";
-                const string Command_Quit1 = "q";
+        //public void ParkDetailsRun()
+        //{
+        //    while (true)
+        //    {
+        //        const string Command_ListArcadia = "1";
+        //        const string Command_ListArches = "2";
+        //        const string Command_ListCuyahoga = "3";
+        //        const string Command_Quit1 = "q";
 
-                string command1 = Console.ReadLine();
+        //        string command1 = Console.ReadLine();
 
-                switch (command1.ToLower())
-                {
-                    case Command_ListArcadia:
-                        GetParkDetail();
-                        break;
+        //        switch (command1.ToLower())
+        //        {
+        //            case Command_ListArcadia:
+        //                GetParkDetail();
+        //                break;
 
-                    case Command_ListArches:
-                        GetParkDetail();
-                        break;
+        //            case Command_ListArches:
+        //                GetParkDetail();
+        //                break;
 
-                    case Command_ListCuyahoga:
-                        GetParkDetail();
-                        break;
+        //            case Command_ListCuyahoga:
+        //                GetParkDetail();
+        //                break;
 
-                    case Command_Quit1:
-                        Console.WriteLine("Thanks for using park registry program.");
-                        break;
-                        //TODO - Fix quit.
+        //            case Command_Quit1:
+        //                Console.WriteLine("Thanks for using park registry program.");
+        //                break;
+        //                //TODO - Fix quit.
 
-                    //default:
-                    //    Console.WriteLine("The command provided was not valid. Try again loser.");
-                    //    break;
-                }
-            }
-        }
+        //            //default:
+        //            //    Console.WriteLine("The command provided was not valid. Try again loser.");
+        //            //    break;
+        //        }
+        //    }
+        //}
 
         private void GetParkDetail()
         {
@@ -156,13 +156,14 @@ namespace Capstone
 
                     case ("3"):
                         Console.Clear();
-                        ListAvailableParks();
-                        GetParkDetail();
-                        break;
+                        //ListAvailableParks();
+                        //GetParkDetail();
+                        return;
+                        
 
                     default:
                         Console.WriteLine("Invalid entry. Please try again.");
-                        CampgroundCommandMenu();
+                        //CampgroundCommandMenu();
                         break;
                 }
             }
@@ -173,7 +174,7 @@ namespace Capstone
         {
             //IList<Park> parks = parkDAO.ListAvailableParks(this.parkId);
             
-            IList<CampGround> campGrounds = campGroundDAO.ViewCampground(this.parkId);
+            IList<CampGround> campGrounds = campGroundDAO.ViewCampgrounds(this.parkId);
 
             //Console.WriteLine($"{this.parkId}");//TODO figure out how to get name of park
             Console.WriteLine("             Name                   Open               Close           Daily Fee");
@@ -183,7 +184,13 @@ namespace Capstone
             {  
                 Console.WriteLine($"#{camp.CampgroundId}\t{camp.Name.PadRight(20)}{new DateTime(2001, camp.OpenFrom, 1).ToString("MMMM")}\t\t{new DateTime(2001, camp.OpenTo, 1).ToString("MMMM")}\t\t{camp.DailyFee:C2}");
             }
-            CampgroundCommandMenu();
+
+            //CampgroundCommandMenu();
+
+        }
+
+        private void CheckSiteAvailabilty()
+        {
 
         }
 
@@ -200,7 +207,8 @@ namespace Capstone
                 if (choice == 0)
                 {
                     Console.Clear();
-                    CampgroundCommandMenu();
+                    return;
+                    //CampgroundCommandMenu();
                 }
 
                 else
@@ -212,19 +220,22 @@ namespace Capstone
 
                     IList<CampSite> campSites = campSiteDAO.SearchReservationRun(campgroundId, arrivalDate, departureDate);
 
+                    CampGround campGround = campGroundDAO.ViewCampground(campgroundId);
+                    //TODO: check if campground is null
+                    decimal cost = campGround.DailyFee * (decimal)(departureDate - arrivalDate).TotalDays;
+
                     Console.WriteLine();
                     Console.WriteLine("Site NO.  MAX OCCUPANCY  ACCESSIBLE   MAX RV LENGTH    UTILITY  COST");
                     Console.WriteLine();
 
                     foreach (CampSite campSite in campSites)
                     {
-                        Console.WriteLine($"#{campSite.SiteId}\t{campSite.MaxOccupancy}\t\t\t{campSite.IsAccessible}\t{campSite.MaxRvLength}\t{campSite.HasUtilties}\t"); //tod add daily fee
+                        Console.WriteLine($"#{campSite.SiteId}\t{campSite.MaxOccupancy}\t\t\t{campSite.IsAccessible}\t{campSite.MaxRvLength}\t{campSite.HasUtilties}\t{cost}"); //todo: add daily fee
                     }
 
-                    CreateReservation();
+                    CreateReservation(arrivalDate, departureDate);
                 }
             }
-
         }
 
         private void CreateReservation(DateTime arrivalDate, DateTime departureDate)
@@ -232,18 +243,16 @@ namespace Capstone
             int siteIdChoice = CLIHelper.GetInteger("Which site should be reserved (enter 0 to cancel)?:");
             string reservationName = CLIHelper.GetString("What name should the reservation be made under?:");
 
-            Reservation reservation = new Reservation
+            Reservation newReservation = new Reservation
             {
                 SiteId = siteIdChoice,
-                Name = reservationName
+                Name = reservationName,
+                FromDate = arrivalDate,
+                ToDate = departureDate
             };
 
-            int reservationId = reservationDAO.CreateReservation(reservation);
+            int reservationId = reservationDAO.CreateReservation(newReservation);
 
-                
-            
-        
-            //Console.WriteLine($"Resevervation has been made and the confirmation ID is"); //TODO
         }
 
         private void PrintHeader()

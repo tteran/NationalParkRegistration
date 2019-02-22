@@ -10,14 +10,14 @@ namespace Capstone.DAL
     {
         private string connectionString;
 
-        private string SQL_ViewCampground = "SELECT * FROM campground WHERE park_id = @park_id;";
-
+        private string SQL_ViewCampgrounds = "SELECT * FROM campground WHERE park_id = @park_id;";
+        private string SQL_ViewCampground = "SELECT * FROM campground WHERE campground_id = @campground_id;";
         public CampGroundSqlDAO(string dbConnectionString)
         {
             connectionString = dbConnectionString;
         }
 
-        public IList<CampGround> ViewCampground(int parkId)
+        public IList<CampGround> ViewCampgrounds(int parkId)
         {
             List<CampGround> campGrounds = new List<CampGround>();
 
@@ -26,7 +26,7 @@ namespace Capstone.DAL
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand(SQL_ViewCampground, conn);
+                    SqlCommand cmd = new SqlCommand(SQL_ViewCampgrounds, conn);
                     cmd.Parameters.AddWithValue("@park_id", parkId);
 
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -46,6 +46,37 @@ namespace Capstone.DAL
             }
 
             return campGrounds;
+        }
+        public CampGround ViewCampground(int campGroundId)
+        {
+            
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand(SQL_ViewCampground, conn);
+                    cmd.Parameters.AddWithValue("@campground_id", campGroundId);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        CampGround camp = ConvertReaderToCampground(reader);
+                        return camp;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("Could not load campgrounds.");
+                Console.WriteLine(ex.Message);
+                throw;
+            }
         }
 
         private CampGround ConvertReaderToCampground(SqlDataReader reader)
