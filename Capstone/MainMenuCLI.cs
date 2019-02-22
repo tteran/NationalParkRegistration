@@ -151,7 +151,7 @@ namespace Capstone
                         break;
 
                     case ("2"):
-                        ReservationRun();
+                        SearchReservationRun();
                         break;
 
                     case ("3"):
@@ -186,44 +186,32 @@ namespace Capstone
 
         }
 
-        private void ReservationRun()
+        private void SearchReservationRun()
         {
-            while (true)
+            Console.WriteLine("Search for Available Campground Sites");
+
+            Console.WriteLine("Which campground (enter 0 to cancel)?:");
+            int choice  = int.Parse(Console.ReadLine());
+
+            int campgroundId;
+            if (choice == 0)
             {
-                Console.WriteLine("Search for Available Campground Sites");
-
-                Console.WriteLine("Which campground (enter 0 to cancel)?: ");
-                int campgroundId = int.Parse(Console.ReadLine());
-
-                if (campgroundId == 0)
-                {
-                    Console.Clear();
-                    ListAvailableParks();
-                    GetParkDetail();
-                    break;
-                }
+                Console.Clear();
+                CampgroundCommandMenu();
             }
 
-            Console.WriteLine("What is the arrival date? ");
-            DateTime arrivalDate = DateTime.Parse(Console.ReadLine());
+            campgroundId = choice;
 
-            Console.WriteLine("What is the departure date? ");
-            DateTime departureDate = DateTime.Parse(Console.ReadLine());
+            DateTime arrivalDate = CLIHelper.GetDateTime("What is the arrival date?:");
+            DateTime departureDate = CLIHelper.GetDateTime("What is the departure date?:");
 
-          
-
-            ///TODO no method, DAO, and interface
-
-        }
-
-        private void SearchForReservation()
-        {
-            IList<CampSite> campSites = campSiteDAO.ListOfSites(this.parkId);
+            IList<CampSite> campSites = campSiteDAO.SearchReservationRun(campgroundId, arrivalDate, departureDate);
 
             foreach (CampSite campSite in campSites)
             {
                 Console.WriteLine($"{campSite.SiteId}\t{campSite.MaxOccupancy}\t\t\t{campSite.IsAccessible}\t{campSite.MaxRvLength}\t{campSite.HasUtilties}\t");
             }
+
         }
 
         private void PrintHeader()

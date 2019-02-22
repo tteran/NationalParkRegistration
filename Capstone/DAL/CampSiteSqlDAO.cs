@@ -10,14 +10,14 @@ namespace Capstone.DAL
     {
         private string connectionString;
 
-        private string SQL_ListOfSites = "SELECT * FROM site WHERE campground_id = @campgroundId ORDER BY site_number;"; //TODO not the right query
+        private string SQL_ListOfSites = "SELECT site.*, reservation.* FROM site JOIN campground ON(site.campground_id = campground.campground_id) LEFT JOIN reservation ON (site.site_id = reservation.site_id) WHERE campground_id = @campgroundId AND reservation.from_date NOT BETWEEN @arrivalDate AND @departureDate AND reservation.to_date NOT BETWEEN @arrivalDate and @departureDate OR site.campground_id = @campgroundId AND reservation.reservation_id IS NULL;";
 
         public CampSiteSqlDAO(string dbConnectionString)
         {
             connectionString = dbConnectionString;
         }
 
-        public IList<CampSite> ListOfSites(int campgroundId)
+        public IList<CampSite> SearchReservationRun(int campgroundId, DateTime arrivalDate, DateTime departureDate)
         {
             List<CampSite> sites = new List<CampSite>();
 
@@ -28,7 +28,9 @@ namespace Capstone.DAL
                     conn.Open();
 
                     SqlCommand cmd = new SqlCommand(SQL_ListOfSites, conn);
-                    cmd.Parameters.AddWithValue("@campgroundId", campgroundId); //TODO WRONG ABOVE 
+                    cmd.Parameters.AddWithValue("@campgroundId", campgroundId);
+                    cmd.Parameters.AddWithValue("@arrivalDate", arrivalDate);
+                    cmd.Parameters.AddWithValue("@departureDate", departureDate);
 
                     SqlDataReader reader = cmd.ExecuteReader();
 
