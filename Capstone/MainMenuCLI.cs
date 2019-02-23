@@ -3,6 +3,7 @@ using Capstone.Models;
 using ProjectOrganizer;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Capstone
@@ -57,6 +58,9 @@ namespace Capstone
             }
         }
 
+        /// <summary>
+        /// Lists parks in the registry.
+        /// </summary>
         private void ListAvailableParks()
         {
             IList<Park> parks = parkDAO.ListAvailableParks();
@@ -68,9 +72,11 @@ namespace Capstone
             {
                 Console.WriteLine($"({park.ParkId.ToString()}) - {park.Name.PadLeft(5)}");
             }
-
         }
       
+        /// <summary>
+        /// Lists details about park based on the user choice.
+        /// </summary>
         private void GetParkDetail()
         {
             this.parkId = CLIHelper.GetInteger("Please choose a park for more details: ");
@@ -128,38 +134,48 @@ namespace Capstone
             }
         }
 
+        /// <summary>
+        /// List campgrounds based on users park ID choice
+        /// </summary>
         private void ViewCampgrounds()
         {           
             IList<CampGround> campGrounds = campGroundDAO.ViewCampgrounds(this.parkId);
 
-            //Console.WriteLine($"{this.parkId}");//TODO figure out how to get name of park
-            Console.WriteLine("             Name                   Open               Close           Daily Fee");
+            Console.WriteLine("           Name                   Open                  Close                    Daily Fee");
             Console.WriteLine();
 
             foreach (CampGround camp in campGrounds)
             {  
-                Console.WriteLine($"#{camp.CampgroundId}\t{camp.Name.PadRight(20)}{new DateTime(2001, camp.OpenFrom, 1).ToString("MMMM")}\t\t{new DateTime(2001, camp.OpenTo, 1).ToString("MMMM")}\t\t{camp.DailyFee:C2}");
+                Console.WriteLine($"#{camp.CampgroundId}\t{camp.Name.PadRight(25)}{new DateTime(2001, camp.OpenFrom, 1).ToString("MMMM").PadRight(25)}{new DateTime(2001, camp.OpenTo, 1).ToString("MMMM").PadRight(25)}{camp.DailyFee:C2}");
             }
-
         }
 
+        /// <summary>
+        /// Searched for sites and enter in dates you want to stay.
+        /// </summary>
         private void SearchReservationRun()
         {
             Console.WriteLine("Search for Available Campground Sites");
+            int campgroundId = CLIHelper.GetInteger("Which campground (enter 0 to cancel)?:");
 
-            Console.WriteLine("Which campground (enter 0 to cancel)?:");
-            int choice = int.Parse(Console.ReadLine());
-            int campgroundId;
+            // TOOD: fix this thing.
+            //List<CampGround> allCampgrounds = new List<CampGround>();
+            //bool notInPark = campgroundId != this.parkId;
 
-            if (choice == 0)
+            if (campgroundId == 0)
             {
                 Console.Clear();
                 return;
             }
 
+            //if (notInPark)
+            //{
+            //    Console.WriteLine("Please enter a valid entry.");
+            //}
+
             else
             {
-                campgroundId = choice;
+                //campgroundId = choice;
 
                 DateTime arrivalDate = CLIHelper.GetDateTime("What is the arrival date? (MM/DD/YYYY): ");
                 DateTime departureDate = CLIHelper.GetDateTime("What is the departure date? (MM/DD/YYYY): ");
@@ -194,6 +210,11 @@ namespace Capstone
             }        
         }
 
+        /// <summary>
+        /// Creates reservation based on availability of dates.
+        /// </summary>
+        /// <param name="arrivalDate"></param>
+        /// <param name="departureDate"></param>
         private void CreateReservation(DateTime arrivalDate, DateTime departureDate)
         {
             int siteIdChoice = CLIHelper.GetInteger("Which site should be reserved (enter 0 to cancel)?:");
