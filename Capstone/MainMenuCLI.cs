@@ -112,6 +112,8 @@ namespace Capstone
                         break;
 
                     case ("2"):
+                        Console.Clear();
+                        ViewCampgrounds();
                         SearchReservationRun();
                         break;
 
@@ -140,8 +142,6 @@ namespace Capstone
             }
 
         }
-
-
 
         private void SearchReservationRun()
         {
@@ -191,8 +191,7 @@ namespace Capstone
                     Console.WriteLine("");
                     CreateReservation(arrivalDate, departureDate);
                 }
-            }
-          
+            }        
         }
 
         private void CreateReservation(DateTime arrivalDate, DateTime departureDate)
