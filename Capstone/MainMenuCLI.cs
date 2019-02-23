@@ -69,15 +69,6 @@ namespace Capstone
                 Console.WriteLine($"({park.ParkId.ToString()}) - {park.Name.PadLeft(5)}");
             }
 
-            //Console.WriteLine("(Q) - Quit"); 
-            //string choice = Console.ReadLine();
-            //if (choice == "q" || choice == "Q")
-            //{ 
-            //    Console.WriteLine("");
-            //    return;
-            //}
-
-            //TODO FIX QUIT function, currently no quit button after listing parks
         }
       
         private void GetParkDetail()
@@ -117,7 +108,7 @@ namespace Capstone
                 {
                     case ("1"):
                         Console.Clear();
-                        ViewCampground();
+                        ViewCampgrounds();
                         break;
 
                     case ("2"):
@@ -135,7 +126,7 @@ namespace Capstone
             }
         }
 
-        private void ViewCampground()
+        private void ViewCampgrounds()
         {           
             IList<CampGround> campGrounds = campGroundDAO.ViewCampgrounds(this.parkId);
 
@@ -170,8 +161,8 @@ namespace Capstone
             {
                 campgroundId = choice;
 
-                DateTime arrivalDate = CLIHelper.GetDateTime("What is the arrival date?:");
-                DateTime departureDate = CLIHelper.GetDateTime("What is the departure date?:");
+                DateTime arrivalDate = CLIHelper.GetDateTime("What is the arrival date? (YYYY-MM-DD): ");
+                DateTime departureDate = CLIHelper.GetDateTime("What is the departure date? (YYYY-MM-DD): ");
 
                 IList<CampSite> campSites = campSiteDAO.SearchReservationRun(campgroundId, arrivalDate, departureDate);   
 

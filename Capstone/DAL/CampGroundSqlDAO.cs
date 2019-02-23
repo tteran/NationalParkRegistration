@@ -17,6 +17,11 @@ namespace Capstone.DAL
             connectionString = dbConnectionString;
         }
 
+        /// <summary>
+        /// Views all campgrounds.
+        /// </summary>
+        /// <param name="parkId"></param>
+        /// <returns></returns>
         public IList<CampGround> ViewCampgrounds(int parkId)
         {
             List<CampGround> campGrounds = new List<CampGround>();
@@ -47,9 +52,14 @@ namespace Capstone.DAL
 
             return campGrounds;
         }
+
+        /// <summary>
+        /// Views a single campground to get the daily fee.
+        /// </summary>
+        /// <param name="campGroundId"></param>
+        /// <returns></returns>
         public CampGround ViewCampground(int campGroundId)
-        {
-            
+        {          
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -73,7 +83,7 @@ namespace Capstone.DAL
             }
             catch (SqlException ex)
             {
-                Console.WriteLine("Could not load campgrounds.");
+                Console.WriteLine("Could not load campground.");
                 Console.WriteLine(ex.Message);
                 throw;
             }
