@@ -161,8 +161,8 @@ namespace Capstone
             {
                 campgroundId = choice;
 
-                DateTime arrivalDate = CLIHelper.GetDateTime("What is the arrival date? (YYYY-MM-DD): ");
-                DateTime departureDate = CLIHelper.GetDateTime("What is the departure date? (YYYY-MM-DD): ");
+                DateTime arrivalDate = CLIHelper.GetDateTime("What is the arrival date? (MM/DD/YYYY): ");
+                DateTime departureDate = CLIHelper.GetDateTime("What is the departure date? (MM/DD/YYYY): ");
 
                 IList<CampSite> campSites = campSiteDAO.SearchReservationRun(campgroundId, arrivalDate, departureDate);   
 

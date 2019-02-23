@@ -30,7 +30,5 @@ namespace Capstone.Tests
             Assert.AreEqual(initalRowCount + 1, finalRowCount);
 
         }
-        
-        
     }
 }
