@@ -139,7 +139,19 @@ namespace Capstone
             {  
                 Console.WriteLine($"#{camp.CampgroundId}\t{camp.Name.PadRight(20)}{new DateTime(2001, camp.OpenFrom, 1).ToString("MMMM")}\t\t{new DateTime(2001, camp.OpenTo, 1).ToString("MMMM")}\t\t{camp.DailyFee:C2}");
             }
+<<<<<<< HEAD
         }
+=======
+
+            //CampgroundCommandMenu();
+
+        }
+
+        //private void CheckSiteAvailabilty()
+        //{
+
+        //}
+>>>>>>> 7a58de86f628a952b1d0d5b58b70cc4b86f57a40
 
         private void SearchReservationRun()
         {
@@ -164,22 +176,31 @@ namespace Capstone
                     DateTime arrivalDate = CLIHelper.GetDateTime("What is the arrival date?:");
                     DateTime departureDate = CLIHelper.GetDateTime("What is the departure date?:");
 
-                    IList<CampSite> campSites = campSiteDAO.SearchReservationRun(campgroundId, arrivalDate, departureDate);
+                    IList<CampSite> campSites = campSiteDAO.SearchReservationRun(campgroundId, arrivalDate, departureDate);   //TODO: check if campground is null
 
-                    CampGround campGround = campGroundDAO.ViewCampground(campgroundId);
-                    //TODO: check if campground is null
-                    decimal cost = campGround.DailyFee * (decimal)(departureDate - arrivalDate).TotalDays;
-
-                    Console.WriteLine();
-                    Console.WriteLine("Site NO.  MAX OCCUPANCY  ACCESSIBLE   MAX RV LENGTH    UTILITY  COST");
-                    Console.WriteLine();
-
-                    foreach (CampSite campSite in campSites)
+                    if (campSites == null)
                     {
-                        Console.WriteLine($"#{campSite.SiteId}\t{campSite.MaxOccupancy}\t\t\t{campSite.IsAccessible}\t{campSite.MaxRvLength}\t{campSite.HasUtilties}\t{cost}"); //todo: add daily fee
+                        Console.WriteLine("There are no available campsites for those dates, Please try again.");
+                        return;
                     }
 
-                    CreateReservation(arrivalDate, departureDate);
+                    else
+                    {
+                        CampGround campGround = campGroundDAO.ViewCampground(campgroundId);
+
+                        decimal cost = campGround.DailyFee * (decimal)(departureDate - arrivalDate).TotalDays;
+
+                        Console.WriteLine();
+                        Console.WriteLine("Site NO.  MAX OCCUPANCY  ACCESSIBLE   MAX RV LENGTH    UTILITY  COST");
+                        Console.WriteLine();
+
+                        foreach (CampSite campSite in campSites)
+                        {
+                            Console.WriteLine($"#{campSite.SiteId}\t{campSite.MaxOccupancy}\t\t\t{campSite.IsAccessible}\t{campSite.MaxRvLength}\t{campSite.HasUtilties}\t{cost}"); //todo: add daily fee
+                        }
+
+                        CreateReservation(arrivalDate, departureDate);
+                    }
                 }
             }
         }
