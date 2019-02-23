@@ -17,6 +17,10 @@ namespace Capstone.DAL
             connectionString = dbConnectionString;
         }
 
+        /// <summary>
+        /// Lists parks in the registry.
+        /// </summary>
+        /// <returns></returns>
         public IList<Park> ListAvailableParks()
         {
             List<Park> parks = new List<Park>();
@@ -36,7 +40,6 @@ namespace Capstone.DAL
                         Park prk = ConvertReaderToPark(reader);
                         parks.Add(prk);
                     }
-
                 }
             }
             catch (SqlException ex)
@@ -50,6 +53,11 @@ namespace Capstone.DAL
 
         }
 
+        /// <summary>
+        /// Gets the details about the park selected.
+        /// </summary>
+        /// <param name="parkId"></param>
+        /// <returns></returns>
         public IList<Park> GetParkDetail(int parkId)
         {
             List<Park> parks = new List<Park>();

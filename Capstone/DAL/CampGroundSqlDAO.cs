@@ -12,6 +12,7 @@ namespace Capstone.DAL
 
         private string SQL_ViewCampgrounds = "SELECT * FROM campground WHERE park_id = @park_id;";
         private string SQL_ViewCampground = "SELECT * FROM campground WHERE campground_id = @campground_id;";
+
         public CampGroundSqlDAO(string dbConnectionString)
         {
             connectionString = dbConnectionString;

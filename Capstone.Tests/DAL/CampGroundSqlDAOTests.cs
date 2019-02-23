@@ -17,13 +17,5 @@ namespace Capstone.Tests
             IList<CampGround> campGrounds = dao.ViewCampgrounds(ParkId);
             Assert.AreEqual(1, campGrounds.Count);
         }
-
-        [TestMethod]
-        public void ViewCampground_ShouldReturn1Campground()
-        {
-            CampGroundSqlDAO dao = new CampGroundSqlDAO(ConnectionString);
-            CampGround camp = dao.ViewCampground(CampgroundId);
-            Assert.AreEqual(1, camp);
-        }
     }
 }

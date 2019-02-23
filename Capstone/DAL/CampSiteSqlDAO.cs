@@ -20,6 +20,13 @@ namespace Capstone.DAL
             connectionString = dbConnectionString;
         }
 
+        /// <summary>
+        /// Allows user to search for a reservation.
+        /// </summary>
+        /// <param name="campgroundId"></param>
+        /// <param name="arrivalDate"></param>
+        /// <param name="departureDate"></param>
+        /// <returns></returns>
         public IList<CampSite> SearchReservationRun(int campgroundId, DateTime arrivalDate, DateTime departureDate)
         {
             List<CampSite> sites = new List<CampSite>();
@@ -52,11 +59,6 @@ namespace Capstone.DAL
             }
 
             return sites;
-        }
-
-        public IList<CampSite> ListOfSites()
-        {
-            throw new NotImplementedException();
         }
 
         private CampSite ConvertReaderToSite(SqlDataReader reader)

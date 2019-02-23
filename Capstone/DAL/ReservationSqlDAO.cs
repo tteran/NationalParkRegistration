@@ -19,6 +19,11 @@ namespace Capstone.DAL
             this.connectionString = connectionString;
         }
 
+        /// <summary>
+        /// Creates the reservation.
+        /// </summary>
+        /// <param name="reservation"></param>
+        /// <returns></returns>
         public int CreateReservation(Reservation reservation)
         {
             int reservationId;

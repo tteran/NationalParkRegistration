@@ -231,12 +231,6 @@ namespace Capstone
             }
         }
 
-        //public List<CampSite> CheckAvailabilty(int campgroundId, Reservation reservation)
-        //{
-
-        //}
-
-
         private void PrintHeader()
         {
             Console.WriteLine(@"                       __,--'\");
