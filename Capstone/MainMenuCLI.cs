@@ -69,8 +69,14 @@ namespace Capstone
                 Console.WriteLine($"({park.ParkId.ToString()}) - {park.Name.PadLeft(5)}");
             }
 
-            Console.WriteLine("(Q) - Quit");
-            
+            //Console.WriteLine("(Q) - Quit");
+            //string choice = Console.ReadLine();
+            //if (choice == "q" || choice == "Q")
+            //{ 
+            //    Console.WriteLine("");
+            //    return;
+            //}
+
         }
 
         //public void ParkDetailsRun()
@@ -156,14 +162,11 @@ namespace Capstone
 
                     case ("3"):
                         Console.Clear();
-                        //ListAvailableParks();
-                        //GetParkDetail();
                         return;
                         
 
                     default:
-                        Console.WriteLine("Invalid entry. Please try again.");
-                        //CampgroundCommandMenu();
+                        Console.WriteLine("Invalid entry. Please try again.");                    
                         break;
                 }
             }
@@ -185,8 +188,6 @@ namespace Capstone
                 Console.WriteLine($"#{camp.CampgroundId}\t{camp.Name.PadRight(20)}{new DateTime(2001, camp.OpenFrom, 1).ToString("MMMM")}\t\t{new DateTime(2001, camp.OpenTo, 1).ToString("MMMM")}\t\t{camp.DailyFee:C2}");
             }
 
-            //CampgroundCommandMenu();
-
         }
 
         //private void CheckSiteAvailabilty()
@@ -196,55 +197,52 @@ namespace Capstone
 
         private void SearchReservationRun()
         {
-            while (true)
+            Console.WriteLine("Search for Available Campground Sites");
+
+            Console.WriteLine("Which campground (enter 0 to cancel)?:");
+            int choice = int.Parse(Console.ReadLine());
+            int campgroundId;
+
+            if (choice == 0)
             {
-                Console.WriteLine("Search for Available Campground Sites");
+                Console.Clear();
+                return;
+            }
 
-                Console.WriteLine("Which campground (enter 0 to cancel)?:");
-                int choice = int.Parse(Console.ReadLine());
-                int campgroundId;
+            else
+            {
+                campgroundId = choice;
 
-                if (choice == 0)
+                DateTime arrivalDate = CLIHelper.GetDateTime("What is the arrival date?:");
+                DateTime departureDate = CLIHelper.GetDateTime("What is the departure date?:");
+
+                IList<CampSite> campSites = campSiteDAO.SearchReservationRun(campgroundId, arrivalDate, departureDate);   //TODO: check if campground is null
+
+                if (campSites == null)
                 {
-                    Console.Clear();
+                    Console.WriteLine("There are no available campsites for those dates, Please try again.");
                     return;
-                    //CampgroundCommandMenu();
                 }
 
                 else
                 {
-                    campgroundId = choice;
+                    CampGround campGround = campGroundDAO.ViewCampground(campgroundId);
 
-                    DateTime arrivalDate = CLIHelper.GetDateTime("What is the arrival date?:");
-                    DateTime departureDate = CLIHelper.GetDateTime("What is the departure date?:");
+                    decimal cost = campGround.DailyFee * (decimal)(departureDate - arrivalDate).TotalDays;
 
-                    IList<CampSite> campSites = campSiteDAO.SearchReservationRun(campgroundId, arrivalDate, departureDate);   //TODO: check if campground is null
+                    Console.WriteLine();
+                    Console.WriteLine("Site NO.  MAX OCCUPANCY  ACCESSIBLE   MAX RV LENGTH    UTILITY  COST");
+                    Console.WriteLine();
 
-                    if (campSites == null)
+                    foreach (CampSite campSite in campSites)
                     {
-                        Console.WriteLine("There are no available campsites for those dates, Please try again.");
-                        return;
+                        Console.WriteLine($"#{campSite.SiteId}\t{campSite.MaxOccupancy}\t\t\t{campSite.IsAccessible}\t{campSite.MaxRvLength}\t{campSite.HasUtilties}\t{cost}"); //todo: add daily fee
                     }
 
-                    else
-                    {
-                        CampGround campGround = campGroundDAO.ViewCampground(campgroundId);
-
-                        decimal cost = campGround.DailyFee * (decimal)(departureDate - arrivalDate).TotalDays;
-
-                        Console.WriteLine();
-                        Console.WriteLine("Site NO.  MAX OCCUPANCY  ACCESSIBLE   MAX RV LENGTH    UTILITY  COST");
-                        Console.WriteLine();
-
-                        foreach (CampSite campSite in campSites)
-                        {
-                            Console.WriteLine($"#{campSite.SiteId}\t{campSite.MaxOccupancy}\t\t\t{campSite.IsAccessible}\t{campSite.MaxRvLength}\t{campSite.HasUtilties}\t{cost}"); //todo: add daily fee
-                        }
-
-                        CreateReservation(arrivalDate, departureDate);
-                    }
+                    CreateReservation(arrivalDate, departureDate);
                 }
             }
+          
         }
 
         private void CreateReservation(DateTime arrivalDate, DateTime departureDate)
@@ -261,6 +259,19 @@ namespace Capstone
             };
 
             int reservationId = reservationDAO.CreateReservation(newReservation);
+
+            if (reservationId > 0)
+            {
+                Console.WriteLine("====================Successfully added your reservation===================");
+                Console.WriteLine("");
+            }
+
+            else
+            {
+                Console.WriteLine("==================== ERROR occurred in creating your Reservation =================== ");
+                Console.WriteLine("PLEASE TRY AGAIN");
+                Console.WriteLine("");
+            }
 
         }
 
