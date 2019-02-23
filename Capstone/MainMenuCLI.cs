@@ -26,7 +26,6 @@ namespace Capstone
 
         public void RunMenuCLI()
         {
-
             while (true)
             {
             PrintHeader();
@@ -72,44 +71,7 @@ namespace Capstone
             Console.WriteLine("(Q) - Quit");
             
         }
-
-        //public void ParkDetailsRun()
-        //{
-        //    while (true)
-        //    {
-        //        const string Command_ListArcadia = "1";
-        //        const string Command_ListArches = "2";
-        //        const string Command_ListCuyahoga = "3";
-        //        const string Command_Quit1 = "q";
-
-        //        string command1 = Console.ReadLine();
-
-        //        switch (command1.ToLower())
-        //        {
-        //            case Command_ListArcadia:
-        //                GetParkDetail();
-        //                break;
-
-        //            case Command_ListArches:
-        //                GetParkDetail();
-        //                break;
-
-        //            case Command_ListCuyahoga:
-        //                GetParkDetail();
-        //                break;
-
-        //            case Command_Quit1:
-        //                Console.WriteLine("Thanks for using park registry program.");
-        //                break;
-        //                //TODO - Fix quit.
-
-        //            //default:
-        //            //    Console.WriteLine("The command provided was not valid. Try again loser.");
-        //            //    break;
-        //        }
-        //    }
-        //}
-
+      
         private void GetParkDetail()
         {
             this.parkId = CLIHelper.GetInteger("Please choose a park for more details: ");
@@ -156,24 +118,17 @@ namespace Capstone
 
                     case ("3"):
                         Console.Clear();
-                        //ListAvailableParks();
-                        //GetParkDetail();
                         return;
                         
-
                     default:
                         Console.WriteLine("Invalid entry. Please try again.");
-                        //CampgroundCommandMenu();
                         break;
                 }
             }
         }
 
-
         private void ViewCampground()
-        {
-            //IList<Park> parks = parkDAO.ListAvailableParks(this.parkId);
-            
+        {           
             IList<CampGround> campGrounds = campGroundDAO.ViewCampgrounds(this.parkId);
 
             //Console.WriteLine($"{this.parkId}");//TODO figure out how to get name of park
@@ -184,14 +139,6 @@ namespace Capstone
             {  
                 Console.WriteLine($"#{camp.CampgroundId}\t{camp.Name.PadRight(20)}{new DateTime(2001, camp.OpenFrom, 1).ToString("MMMM")}\t\t{new DateTime(2001, camp.OpenTo, 1).ToString("MMMM")}\t\t{camp.DailyFee:C2}");
             }
-
-            //CampgroundCommandMenu();
-
-        }
-
-        private void CheckSiteAvailabilty()
-        {
-
         }
 
         private void SearchReservationRun()
@@ -208,7 +155,6 @@ namespace Capstone
                 {
                     Console.Clear();
                     return;
-                    //CampgroundCommandMenu();
                 }
 
                 else
