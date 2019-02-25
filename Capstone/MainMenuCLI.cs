@@ -158,20 +158,11 @@ namespace Capstone
             Console.WriteLine("Search for Available Campground Sites");
             int campgroundId = CLIHelper.GetInteger("Which campground (enter 0 to cancel)?:");
 
-            // TOOD: fix this thing.
-            //List<CampGround> allCampgrounds = new List<CampGround>();
-            //bool notInPark = campgroundId != this.parkId;
-
             if (campgroundId == 0)
             {
                 Console.Clear();
                 return;
             }
-
-            //if (notInPark)
-            //{
-            //    Console.WriteLine("Please enter a valid entry.");
-            //}
 
             else
             {
