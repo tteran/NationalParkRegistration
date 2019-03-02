@@ -20,4 +20,4 @@ Module 2 capstone at Tech Elevator
 * [SQL-SSMS](https://docs.microsoft.com/en-us/sql/sql-server/sql-server-technical-documentation?toc=..%2ftoc%2ftoc.json&view=sql-server-2017) - Used a database to pull in information about the camps and to add reservations.
 
 ## Authors
-* Paired rogramming partner: Mariah Dawson
+* Paired programming partner: Mariah Dawson
