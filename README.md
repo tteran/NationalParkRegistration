@@ -1,4 +1,4 @@
-# National Park Campsite Reservation
+# National Park Campsite Reservation Capstone
 Module 2 capstone at Tech Elevator 
 
 ## What the user can do
@@ -14,7 +14,7 @@ Module 2 capstone at Tech Elevator
 * User can view all upcoming reservations within a month.
 * Transfer it to an MVC application and build out some views for a better user experience.
 
-## Technology used
+## IDE and Languages
 * [C#](https://docs.microsoft.com/en-us/dotnet/csharp/) - The language used
 * [Visual Studio 2017](https://visualstudio.microsoft.com/vs/whatsnew/) - IDE used
 * [SQL-SSMS](https://docs.microsoft.com/en-us/sql/sql-server/sql-server-technical-documentation?toc=..%2ftoc%2ftoc.json&view=sql-server-2017) - Used a database to pull in information about the camps and to add reservations.
